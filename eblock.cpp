@@ -36,13 +36,13 @@ void e_set_mode(uint8_t pin, uint8_t mode)
   }
 }
 
-uint8_t e_button(uint8_t pin){
+uint8_t e_is_button(uint8_t pin){
   e_set_mode(pin, INPUT);
 
   return digitalRead(pin) == LOW;
 }
 
-uint8_t e_button_up(uint8_t pin){
+uint8_t e_is_button_down(uint8_t pin){
   
   if( e_button(pin) && bitRead(e_pin_states, pin)==0 ) {
     bitSet(e_pin_states, pin);
@@ -51,7 +51,7 @@ uint8_t e_button_up(uint8_t pin){
   return 0;
 }
 
-uint8_t e_button_down(uint8_t pin){
+uint8_t e_is_button_up(uint8_t pin){
   
   if( !e_button(pin) && bitRead(e_pin_states, pin) ) {
     bitClear(e_pin_states, pin);
@@ -60,15 +60,21 @@ uint8_t e_button_down(uint8_t pin){
   return 0;
 }
 
-void e_pin_on(uint8_t pin){
+void e_pin_set(uint8_t pin, uint8_t state){
   e_set_mode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);  
+  digitalWrite(pin, state);  
+}
+
+void e_pin_on(uint8_t pin){
+  e_set_pin(pin, HIGH);
 }
 
 void e_pin_off(uint8_t pin){
-  e_set_mode(pin, OUTPUT);
-  digitalWrite(pin, LOW); 
+   e_set_pin(pin, LOW);
 }
+
+
+
 
 void e_rgb( uint8_t pinR, uint8_t pinG, uint8_t pinB,  uint8_t R, uint8_t G, uint8_t B ){
   e_set_mode(pinR, OUTPUT);
@@ -80,13 +86,13 @@ void e_rgb( uint8_t pinR, uint8_t pinG, uint8_t pinB,  uint8_t R, uint8_t G, uin
   analogWrite(pinB, B);
 }
 
-uint16_t e_analog(uint8_t pin){
+uint16_t e_get_analog(uint8_t pin){
   if(pin< A0) pin=A0+pin; //- if pin pased like a number 1,2,3  instead A1, A2, A3
   e_set_mode(pin, INPUT);
   return analogRead(pin);
 }
 
-uint8_t e_analog_perc(uint8_t pin){
+uint8_t e_get_analog_perc(uint8_t pin){
   uint16_t val =  e_analog(pin);
 
   return map(val, 0,1023, 0,100);
