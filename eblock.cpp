@@ -44,7 +44,7 @@ uint8_t e_is_button(uint8_t pin){
 
 uint8_t e_is_button_down(uint8_t pin){
   
-  if( e_button(pin) && bitRead(e_pin_states, pin)==0 ) {
+  if( e_is_button(pin) && bitRead(e_pin_states, pin)==0 ) {
     bitSet(e_pin_states, pin);
     return 1;
   }
@@ -53,7 +53,7 @@ uint8_t e_is_button_down(uint8_t pin){
 
 uint8_t e_is_button_up(uint8_t pin){
   
-  if( !e_button(pin) && bitRead(e_pin_states, pin) ) {
+  if( !e_is_button(pin) && bitRead(e_pin_states, pin) ) {
     bitClear(e_pin_states, pin);
     return 1;
   }
@@ -66,25 +66,21 @@ void e_pin_set(uint8_t pin, uint8_t state){
 }
 
 void e_pin_on(uint8_t pin){
-  e_set_pin(pin, HIGH);
+  e_pin_set(pin, HIGH);
 }
 
 void e_pin_off(uint8_t pin){
-   e_set_pin(pin, LOW);
+   e_pin_set(pin, LOW);
 }
 
 
+void e_pwm(uint8_t pin, uint8_t value){
+   e_set_mode(pin, OUTPUT);
+   analogWrite(pin, value);
 
-
-void e_rgb( uint8_t pinR, uint8_t pinG, uint8_t pinB,  uint8_t R, uint8_t G, uint8_t B ){
-  e_set_mode(pinR, OUTPUT);
-  e_set_mode(pinG, OUTPUT);
-  e_set_mode(pinB, OUTPUT);
-
-  analogWrite(pinR, R);
-  analogWrite(pinG, G);
-  analogWrite(pinB, B);
 }
+
+
 
 uint16_t e_get_analog(uint8_t pin){
   if(pin< A0) pin=A0+pin; //- if pin pased like a number 1,2,3  instead A1, A2, A3
@@ -93,7 +89,7 @@ uint16_t e_get_analog(uint8_t pin){
 }
 
 uint8_t e_get_analog_perc(uint8_t pin){
-  uint16_t val =  e_analog(pin);
+  uint16_t val =  e_get_analog(pin);
 
   return map(val, 0,1023, 0,100);
 

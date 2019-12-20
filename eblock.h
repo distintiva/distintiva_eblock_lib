@@ -20,12 +20,12 @@ extern void 	e_pin_set(uint8_t pin, uint8_t state);
 extern void 	e_pin_on(uint8_t pin);
 // Sets pin LOW (no need to setMode before)
 extern void 	e_pin_off(uint8_t pin);
-// RGB led connected to 3 digital pins (R, G, B)
-extern void 	e_rgb( uint8_t pinR, uint8_t pinG, uint8_t pinB,  uint8_t R, uint8_t G, uint8_t B );
 // Read analog Value (no need to setMode before)
 extern uint16_t e_get_analog(uint8_t pin);
 // Read analog Value in percent(0-100) (no need to setMode before)
 extern uint8_t 	e_get_analog_perc(uint8_t pin);
+// Sets PWM
+extern void 	e_pwm(uint8_t pin, uint8_t value);
 
 
 
