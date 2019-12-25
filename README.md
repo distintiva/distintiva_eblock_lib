@@ -1,9 +1,9 @@
-# Distintiva eBloc Library
+# Distintiva eBlock Library
  
  This library is developed to generate easy arduino code for  [eBlock](https://github.com/distintiva/eBlock)
 
 
-#API 
+# API 
 
 ```c
 
