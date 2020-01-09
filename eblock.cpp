@@ -127,8 +127,28 @@ uint8_t e_is_button_down(uint8_t pin){
 }
 
 void e_pin_set(uint8_t pin, uint8_t state){
+  // we can use state=2 to toggle pin state [0-1]
+  if(state>1) return e_pin_toggle(pin);
+  
   e_set_mode(pin, OUTPUT);
+  
+  if(state){
+    bitSet64(e_pin_states, pin);
+  }else{
+    bitClear64(e_pin_states, pin);
+  }
+
   digitalWrite(pin, state);  
+}
+
+void e_pin_toggle(uint8_t pin){
+  
+  if( bitRead64(e_pin_states, pin)==1 ) {
+    e_pin_set(pin, 0);
+  }else{
+    e_pin_set(pin, 1);
+  }
+
 }
 
 void e_pin_on(uint8_t pin){

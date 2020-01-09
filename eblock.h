@@ -25,8 +25,10 @@ extern uint8_t 	e_is_button(uint8_t pin);
 extern uint8_t 	e_is_button_down(uint8_t pin);
 // True if digital button(pin) goes from pressed to normal
 extern uint8_t 	e_is_button_up(uint8_t pin);
-// Sets pin = state (no need to setMode before)
+// Sets pin = state[0-1]  we can use state=2 to toggle pin state  (no need to setMode before)
 extern void 	e_pin_set(uint8_t pin, uint8_t state);
+// Alternates the state of a digital pin
+extern void e_pin_toggle(uint8_t pin);
 // Sets pin HIGH (no need to setMode before)
 extern void 	e_pin_on(uint8_t pin);
 // Sets pin LOW (no need to setMode before)
