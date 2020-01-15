@@ -3,28 +3,32 @@
 
     For those situations when you can not use tone and noTone
 
+   Inspired in TimerFreeTone tone Library from  Tim Eckel 
+   https://bitbucket.org/teckel12/arduino-timer-free-tone/wiki/Home
 
-    Idea based on the source of MeBuzzer.cpp from makeblock library 
+
 **************************************************************/
 #ifndef eTone_H
 #define eTone_H
 
+
+
 void eTone(int pin, uint16_t frq, uint32_t duration)
 {
+
   int period = 1000000L / frq;
-  int pulse = period / 2;
+  int pulse = period / 2 ;
   uint32_t ms=0;
  
-  for (long i = 0; i < duration * 1000L; i += period) 
+  ms = millis();
+  while(millis()-ms<duration)
   {
-    
-    ms = micros();
+        
     digitalWrite(pin, HIGH);
-    while(micros()-ms<pulse){};
-    
-    ms = micros();
+    delayMicroseconds(pulse);
     digitalWrite(pin, LOW);
-    while(micros()-ms<pulse){};
+    delayMicroseconds(pulse);
+
   }
 
 }
